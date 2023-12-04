@@ -2,19 +2,19 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import { OfferDetails } from '../../components/offer-details/offer-details';
-import { Map } from '../../components/map/map';
+import OfferDetails from '../../components/offer-details/offer-details';
+import Map from '../../components/map/map';
 import { MAX_NEAR_PLACES_COUNT } from '../../const/const';
-import OffersListMemo from '../../components/offers-list/offers-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { fetchNearOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { getOffer, getOfferLoadingStatus } from '../../store/slices/offer/selectors';
 import { dropOffer } from '../../store/slices/offer/offer';
 import { getNearOffers } from '../../store/slices/near-offers/selectors';
+import OffersList from '../../components/offers-list/offers-list';
 
-function OfferScreen(): JSX.Element {
+function OfferScreenComponent(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
 
@@ -65,11 +65,12 @@ function OfferScreen(): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OffersListMemo block='near' offers={nearOffersToRender}/>
+            <OffersList block='near' offers={nearOffersToRender}/>
           </section>
         </div>
       </main>
     </div>
   );
 }
+const OfferScreen = memo(OfferScreenComponent);
 export default OfferScreen;

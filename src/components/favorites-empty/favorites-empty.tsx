@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-export function FavoritesEmpty(): JSX.Element {
+export function FavoritesEmptyComponent(): JSX.Element {
   return(
     <React.Fragment>
       <h1 className="visually-hidden">Favorites (empty)</h1>
@@ -11,3 +11,6 @@ export function FavoritesEmpty(): JSX.Element {
     </React.Fragment>
   );
 }
+
+const FavoritesEmpty = memo(FavoritesEmptyComponent);
+export default FavoritesEmpty;

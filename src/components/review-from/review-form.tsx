@@ -1,17 +1,18 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, memo, useState } from 'react';
 import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, ratingStarsName } from '../../const/const';
 import { OfferPreview } from '../../types/offer-preview';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ReviewShortType } from '../../types/review';
 import { addNewReviewAction } from '../../store/api-actions';
+import { getAddingReviewStatus } from '../../store/slices/reviews/selectors';
 type ReviewProps = {
   idOffer: OfferPreview['id'];
 }
-export function ReviewForm({idOffer}: ReviewProps): JSX.Element {
+export function ReviewFormComponent({idOffer}: ReviewProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [comment, setComment] = useState<ReviewShortType['comment']>('');
   const [rating, setRating] = useState<ReviewShortType['rating'] | null>(null);
-  const [isFormDisabled, setIsFormDisabled] = useState<boolean>(false);
+  const setIsFormDisabled = useAppSelector(getAddingReviewStatus);
   const isValid =
     comment.length >= MIN_COMMENT_LENGTH &&
     comment.length <= MAX_COMMENT_LENGTH &&
@@ -28,12 +29,10 @@ export function ReviewForm({idOffer}: ReviewProps): JSX.Element {
   const resetForm = () => {
     setComment('');
     setRating(null);
-    setIsFormDisabled(false);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    setIsFormDisabled(true);
     if(idOffer) {
       dispatch(addNewReviewAction([idOffer, {comment, rating: rating as ReviewShortType['rating']}]));
     }
@@ -61,7 +60,7 @@ export function ReviewForm({idOffer}: ReviewProps): JSX.Element {
                 checked={score === String(rating)}
                 onChange={handleInputChange}
                 type="radio"
-                disabled={isFormDisabled}
+                disabled={setIsFormDisabled}
               />
 
               <label
@@ -83,7 +82,7 @@ export function ReviewForm({idOffer}: ReviewProps): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={comment}
         onChange={handleTextareaChange}
-        disabled={isFormDisabled}
+        disabled={setIsFormDisabled}
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -96,11 +95,14 @@ export function ReviewForm({idOffer}: ReviewProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isFormDisabled || !isValid}
+          disabled={setIsFormDisabled || !isValid}
         >
-          {isFormDisabled ? '...Submit' : 'Submit'}
+          {setIsFormDisabled ? 'Submit...' : 'Submit'}
         </button>
       </div>
     </form>
   );
 }
+
+const ReviewForm = memo(ReviewFormComponent);
+export default ReviewForm;

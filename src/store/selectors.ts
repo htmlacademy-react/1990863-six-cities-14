@@ -1,22 +1,23 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { Offer } from '../types/offer';
-import { OfferPreview } from '../types/offer-preview';
-import { Sorting } from '../types/sorting';
 import { ReviewType } from '../types/review';
-import { MAX_COMMENT_COUNT } from '../const/const';
+import { MAX_COMMENT_COUNT, NameSpace } from '../const/const';
+import { State } from '../types/state';
+import { Offer } from '../types/offer';
 
-const getFavoritesItems = (favorites: OfferPreview[]) => favorites;
+const getFavoritesItems = (state: State) => state[NameSpace.Favorites].favorites;
 
 export const favoriteOffersSortSelector = createSelector(getFavoritesItems, (items) =>
-  items.sort((a, b) => (a.city.name > b.city.name ? 1 : -1))
+  [...items].sort((a, b) => (a.city.name > b.city.name ? 1 : -1))
 );
 
-const getOffers = (state: {offers: Offer[]; sortingItem: Sorting}) => state.offers;
-const getSortingItem = (state: {offers: Offer[]; sortingItem: Sorting}) => state.sortingItem;
+const getSortingItem = (state: State) => state[NameSpace.Offers].sotringByItem;
 
 export const getSortedOffers = createSelector(
-  [ getOffers, getSortingItem ],
-  (offers, sortingItem) => {
+  [
+    getSortingItem,
+    (_: State, offers: Offer[]) => offers
+  ],
+  (sortingItem, offers) => {
     switch (sortingItem) {
       case 'Popular':
         return offers;

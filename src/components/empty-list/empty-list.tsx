@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { City } from '../../types/city';
 
 type EmptyProps = {
   activeCity: City['name'];
 }
 
-export function EmptyList({activeCity}: EmptyProps):JSX.Element {
+export function EmptyListComponent({activeCity}: EmptyProps):JSX.Element {
   return(
     <div className="cities__places-container cities__places-container--empty container">
       <section className="cities__no-places">
@@ -17,3 +18,6 @@ export function EmptyList({activeCity}: EmptyProps):JSX.Element {
     </div>
   );
 }
+
+const EmptyList = memo(EmptyListComponent);
+export default EmptyList;

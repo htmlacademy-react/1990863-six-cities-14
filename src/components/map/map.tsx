@@ -1,5 +1,5 @@
 import { Marker, layerGroup } from 'leaflet';
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { City } from '../../types/city';
 import { useMap } from '../../hooks/use-map/use-map';
 import { currentMarker, defaultMarker } from './map.const';
@@ -15,7 +15,7 @@ type MapProps = {
   selectedOffer: Offer['id'] | null;
 };
 
-export function Map({block, city, offers, selectedOffer}: MapProps): JSX.Element {
+export function MapComponent({block, city, offers, selectedOffer}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -58,3 +58,6 @@ export function Map({block, city, offers, selectedOffer}: MapProps): JSX.Element
     />
   );
 }
+
+const Map = memo(MapComponent);
+export default Map;

@@ -7,9 +7,9 @@ import { memo } from 'react';
 type OffersListProps = {
   block: BlocksName;
   offers: OfferPreview[];
-  onCardHover?: (offer: OfferPreview['id']| null) => void;
+  onCardHover?: (offer: OfferPreview['id'] | null) => void;
 };
-function OffersList({block, offers, onCardHover}: OffersListProps): JSX.Element {
+function OffersListComponent({block, offers, onCardHover}: OffersListProps): JSX.Element {
   return(
     <div className={classNames(
       'places__list',
@@ -28,5 +28,5 @@ function OffersList({block, offers, onCardHover}: OffersListProps): JSX.Element 
   );
 }
 
-const OffersListMemo = memo(OffersList);
-export default OffersListMemo;
+const OffersList = memo(OffersListComponent);
+export default OffersList;

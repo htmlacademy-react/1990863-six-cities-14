@@ -4,6 +4,7 @@ import { City } from '../../../types/city';
 import { Offer } from '../../../types/offer';
 import { Sorting } from '../../../types/sorting';
 import { fetchOffersAction } from '../../api-actions';
+import { OfferPreview } from '../../../types/offer-preview';
 
 type OffersStateType = {
   activeCity: City['name'];
@@ -29,6 +30,12 @@ export const offersSlice = createSlice({
     setSortingItem: (state, action: PayloadAction<Sorting>) => {
       state.sotringByItem = action.payload;
     },
+    setFavorite: (state, action: PayloadAction<OfferPreview['id']>) => {
+      const offerChangeFavorite = state.offers.find(({id}) => id === action.payload);
+      if(offerChangeFavorite) {
+        offerChangeFavorite.isFavorite = !offerChangeFavorite.isFavorite;
+      }
+    }
   },
   extraReducers(builder) {
     builder
@@ -45,4 +52,4 @@ export const offersSlice = createSlice({
   },
 });
 
-export const { setActiveCity, setSortingItem } = offersSlice.actions;
+export const { setActiveCity, setSortingItem, setFavorite } = offersSlice.actions;

@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import MainScreen from '../../pages/main-screen/main-screen';
-import { AppRoutes } from '../../const/const';
+import { AppRoutes, AuthorizationStatus } from '../../const/const';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
@@ -10,7 +10,7 @@ import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { HelmetProvider } from 'react-helmet-async';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { checkAuthAction, fetchOffersAction } from '../../store/api-actions';
+import { checkAuthAction, fetchFavoriteOffersAction, fetchOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route/history-route';
@@ -24,13 +24,16 @@ function App(): JSX.Element {
     dispatch(checkAuthAction());
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(fetchOffersAction());
-  }, [dispatch]);
-
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersLoading = useAppSelector(getOffersLoadingStatus);
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+    if(authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteOffersAction());
+    }
+  }, [authorizationStatus, dispatch]);
 
   if (!isAuthChecked || isOffersLoading) {
     return (

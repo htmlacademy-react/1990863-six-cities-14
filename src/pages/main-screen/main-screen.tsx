@@ -4,10 +4,10 @@ import Locations from '../../components/locations/locations';
 import { OfferPreview } from '../../types/offer-preview';
 import { insertPlural } from '../../utils/common';
 import OffersListMemo from '../../components/offers-list/offers-list';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { City } from '../../types/city';
-import { Map } from '../../components/map/map';
-import { EmptyList } from '../../components/empty-list/empty-list';
+import Map from '../../components/map/map';
+import EmptyList from '../../components/empty-list/empty-list';
 import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -17,7 +17,7 @@ import { getSortedOffers } from '../../store/selectors';
 import { getActiveCity, getOffers, getSortingItem } from '../../store/slices/offers/selectors';
 import { setActiveCity, setSortingItem } from '../../store/slices/offers/offers';
 
-function MainScreen(): JSX.Element {
+function MainScreenComponent(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const offers = useAppSelector(getOffers);
@@ -46,8 +46,7 @@ function MainScreen(): JSX.Element {
     dispatch(setSortingItem(type));
   }, [dispatch]);
 
-  const sortedOffers = getSortedOffers({offers: filteredOffersByCity, sortingItem: sortingByItem});
-
+  const sortedOffers = useAppSelector((state) => getSortedOffers(state, filteredOffersByCity));
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -64,7 +63,7 @@ function MainScreen(): JSX.Element {
       >
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <Locations activeCity={activeCity} />  {/*при наведении перерисовывется */}
+          <Locations activeCity={activeCity} />
         </div>
         <div className="cities">
           {
@@ -94,4 +93,5 @@ function MainScreen(): JSX.Element {
   );
 }
 
+const MainScreen = memo(MainScreenComponent);
 export default MainScreen;

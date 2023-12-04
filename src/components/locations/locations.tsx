@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import { CityName } from '../../const/const';
 import classNames from 'classnames';
 import { City } from '../../types/city';
+import { memo } from 'react';
 
 type LocationsProp = {
   activeCity: City['name'];
 }
 
-function Locations({activeCity}: LocationsProp): JSX.Element {
+function LocationsComponent({activeCity}: LocationsProp): JSX.Element {
   return(
     <section className="locations container">
       <ul className="locations__list tabs__list">
@@ -33,4 +34,5 @@ function Locations({activeCity}: LocationsProp): JSX.Element {
   );
 }
 
+const Locations = memo(LocationsComponent);
 export default Locations;

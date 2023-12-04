@@ -3,8 +3,9 @@ import Logo from '../../components/logo/logo';
 import { AppRoutes } from '../../const/const';
 import { Helmet } from 'react-helmet-async';
 import './style.css';
+import { memo } from 'react';
 
-function NotFoundScreen(): JSX.Element {
+function NotFoundScreenComponent(): JSX.Element {
   return(
     <div className='page--gray container container-404'>
       <Helmet>
@@ -22,4 +23,5 @@ function NotFoundScreen(): JSX.Element {
   );
 }
 
+const NotFoundScreen = memo(NotFoundScreenComponent);
 export default NotFoundScreen;

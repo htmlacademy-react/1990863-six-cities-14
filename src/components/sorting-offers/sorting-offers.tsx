@@ -7,7 +7,7 @@ type SortingOffersProps = {
   sortingByItem: Sorting;
   onChange: (newSorting: Sorting) => void;
 }
-function SortingOffers({sortingByItem, onChange}: SortingOffersProps): JSX.Element {
+function SortingOffersComponent({sortingByItem, onChange}: SortingOffersProps): JSX.Element {
   const [isOpened, setIsOpened] = useState(false);
 
   const handleSortingItemClick = (type: Sorting) => {
@@ -60,5 +60,5 @@ function SortingOffers({sortingByItem, onChange}: SortingOffersProps): JSX.Eleme
   );
 }
 
-const SortingOffersMemo = memo(SortingOffers);
-export default SortingOffersMemo;
+const SortingOffers = memo(SortingOffersComponent);
+export default SortingOffers;

@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import Logo from '../logo/logo';
 
-function Footer(): JSX.Element {
+function FooterComponent(): JSX.Element {
   return(
     <footer className="footer container">
       <Logo />
@@ -8,4 +9,5 @@ function Footer(): JSX.Element {
   );
 }
 
+const Footer = memo(FooterComponent);
 export default Footer;

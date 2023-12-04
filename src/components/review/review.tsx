@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { ReviewType } from '../../types/review';
 import { formatDate, getRatingWidth, roundRating } from '../../utils/common';
 
@@ -5,7 +6,7 @@ type ReviewProps = {
   review: ReviewType;
 }
 
-export function Review({review}: ReviewProps): JSX.Element{
+export function ReviewComponent({review}: ReviewProps): JSX.Element{
   const {date, comment, rating, user} = review;
   return(
     <li className="reviews__item">
@@ -38,3 +39,6 @@ export function Review({review}: ReviewProps): JSX.Element{
     </li>
   );
 }
+
+const Review = memo(ReviewComponent);
+export default Review;
