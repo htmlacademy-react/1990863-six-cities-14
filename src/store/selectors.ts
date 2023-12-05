@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { ReviewType } from '../types/review';
 import { MAX_COMMENT_COUNT, NameSpace } from '../const/const';
 import { State } from '../types/state';
-import { Offer } from '../types/offer';
+import { OfferPreview } from '../types/offer-preview';
 
 const getFavoritesItems = (state: State) => state[NameSpace.Favorites].favorites;
 
@@ -15,7 +15,7 @@ const getSortingItem = (state: State) => state[NameSpace.Offers].sotringByItem;
 export const getSortedOffers = createSelector(
   [
     getSortingItem,
-    (_: State, offers: Offer[]) => offers
+    (_: State, offers: OfferPreview[]) => offers
   ],
   (sortingItem, offers) => {
     switch (sortingItem) {
