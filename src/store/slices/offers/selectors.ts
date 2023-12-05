@@ -8,3 +8,5 @@ export const getActiveCity = (state: State) => state[NameSpace.Offers].activeCit
 export const getOffersLoadingStatus = (state: State) => state[NameSpace.Offers].isOffersLoading;
 
 export const getSortingItem = (state: State) => state[NameSpace.Offers].sotringByItem;
+
+export const getErrorOffersStatus = (state: State): boolean => state[NameSpace.Offers].hasErrorOffers;

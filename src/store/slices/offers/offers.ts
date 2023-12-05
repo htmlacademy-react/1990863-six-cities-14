@@ -1,16 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../../const/const';
 import { City } from '../../../types/city';
-import { Offer } from '../../../types/offer';
 import { Sorting } from '../../../types/sorting';
 import { fetchOffersAction } from '../../api-actions';
 import { OfferPreview } from '../../../types/offer-preview';
 
 type OffersStateType = {
   activeCity: City['name'];
-  offers: Offer[];
+  offers: OfferPreview[];
   isOffersLoading: boolean;
   sotringByItem: Sorting;
+  hasErrorOffers: boolean;
 }
 
 const initialState: OffersStateType = {
@@ -18,6 +18,7 @@ const initialState: OffersStateType = {
   offers: [],
   isOffersLoading: false,
   sotringByItem: 'Popular',
+  hasErrorOffers: false,
 };
 
 export const offersSlice = createSlice({
@@ -48,6 +49,7 @@ export const offersSlice = createSlice({
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.isOffersLoading = false;
+        state.hasErrorOffers = true;
       });
   },
 });

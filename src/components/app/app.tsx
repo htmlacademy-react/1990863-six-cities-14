@@ -15,7 +15,8 @@ import { useEffect } from 'react';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route/history-route';
 import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/slices/user/selectors';
-import { getOffersLoadingStatus } from '../../store/slices/offers/selectors';
+import { getErrorOffersStatus, getOffersLoadingStatus } from '../../store/slices/offers/selectors';
+import ErrorOffersScreen from '../../pages/error-screen/error-offers-screen';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -27,6 +28,7 @@ function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersLoading = useAppSelector(getOffersLoadingStatus);
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
+  const hasErrorOffers = useAppSelector(getErrorOffersStatus);
 
   useEffect(() => {
     dispatch(fetchOffersAction());
@@ -40,6 +42,12 @@ function App(): JSX.Element {
       <LoadingScreen />
     );
   }
+
+  if (hasErrorOffers) {
+    return (
+      <ErrorOffersScreen />);
+  }
+
   return (
     <HelmetProvider>
 

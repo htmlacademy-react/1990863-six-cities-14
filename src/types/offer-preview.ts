@@ -11,6 +11,5 @@ export type OfferPreview = {
   rating: number;
   type: string;
   price: number;
-  goods: string[];
   location: Location;
 }

@@ -17,13 +17,13 @@ type AsyncActionType = {
 
 
 export const fetchOffersAction = createAsyncThunk<
-  Offer[],
+  OfferPreview[],
   undefined,
   AsyncActionType
 >(
   `${NameSpace.Offers}/fetchOffers`,
   async (_arg, { extra: api}) => {
-    const {data} = await api.get<Offer[]>(APIRoute.Offers);
+    const {data} = await api.get<OfferPreview[]>(APIRoute.Offers);
 
     return data;
   },

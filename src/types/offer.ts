@@ -9,4 +9,5 @@ export type Offer = OfferPreview & {
   host: User;
   images: Image[];
   maxAdults: number;
+  goods: string[];
 };

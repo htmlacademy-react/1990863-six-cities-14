@@ -1,7 +1,3 @@
-const SETTING = {
-  offers: 5
-};
-
 const COUNT_OFFER_IMAGES = 6;
 
 const MAX_COMMENT_LENGTH = 300;
@@ -60,7 +56,6 @@ enum NameSpace {
 }
 
 export {
-  SETTING,
   COUNT_OFFER_IMAGES,
   MAX_COMMENT_LENGTH,
   MIN_COMMENT_LENGTH,

@@ -29,7 +29,8 @@ export const reviewsSlice = createSlice({
       .addCase(addNewReviewAction.fulfilled, (state, action) => {
         state.reviews.push(action.payload);
         state.isAddingReview = false;
-      }).addCase(addNewReviewAction.pending, (state) => {
+      })
+      .addCase(addNewReviewAction.pending, (state) => {
         state.isAddingReview = true;
       });
   },
