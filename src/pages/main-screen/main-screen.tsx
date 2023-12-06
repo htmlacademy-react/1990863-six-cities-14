@@ -21,9 +21,8 @@ function MainScreenComponent(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const offers = useAppSelector(getOffers);
-  const activeCity = useAppSelector(getActiveCity);
   const sortingByItem = useAppSelector(getSortingItem);
-
+  const activeCity = useAppSelector(getActiveCity);
   const [searchParams, ] = useSearchParams({city: activeCity});
   const activeCityParam = searchParams.get('city') as City['name'];
 
@@ -80,7 +79,7 @@ function MainScreenComponent(): JSX.Element {
                     <Map
                       block='cities'
                       city={locationActiveCity}
-                      offers={offers}
+                      offers={sortedOffers}
                       selectedOffer={activeCard}
                     />
                   </div>

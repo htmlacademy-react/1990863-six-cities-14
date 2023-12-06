@@ -21,7 +21,7 @@ export function MapComponent({block, city, offers, selectedOffer}: MapProps): JS
 
   useEffect(() => {
     if(map) {
-      map.setView([city.location.latitude, city.location.longitude], city.location.zoom); //без этого не переключается карта при смене города
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
     }
   }, [map, city]);
 
@@ -54,7 +54,7 @@ export function MapComponent({block, city, offers, selectedOffer}: MapProps): JS
   return (
     <section
       ref={mapRef}
-      className={`${block}__map map ${styles.maps}`} //csss module not working
+      className={` ${styles.maps} ${block}__map map`} //csss module not working
     />
   );
 }

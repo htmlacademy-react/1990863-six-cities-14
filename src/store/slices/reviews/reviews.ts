@@ -6,11 +6,15 @@ import { NameSpace } from '../../../const/const';
 type ReviewsStateType = {
   reviews: ReviewType[];
   isAddingReview: boolean;
+  isAddingError: boolean;
+  isAddingSeccess: boolean;
 }
 
 const initialState: ReviewsStateType = {
   reviews: [],
-  isAddingReview: false
+  isAddingReview: false,
+  isAddingError: false,
+  isAddingSeccess: false,
 };
 
 export const reviewsSlice = createSlice({
@@ -29,9 +33,13 @@ export const reviewsSlice = createSlice({
       .addCase(addNewReviewAction.fulfilled, (state, action) => {
         state.reviews.push(action.payload);
         state.isAddingReview = false;
+        state.isAddingSeccess = true;
       })
       .addCase(addNewReviewAction.pending, (state) => {
         state.isAddingReview = true;
+      })
+      .addCase(addNewReviewAction.rejected, (state) => {
+        state.isAddingError = true;
       });
   },
 });

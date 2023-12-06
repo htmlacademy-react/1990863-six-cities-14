@@ -4,7 +4,7 @@ import { OfferPreview } from '../../types/offer-preview';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ReviewShortType } from '../../types/review';
 import { addNewReviewAction } from '../../store/api-actions';
-import { getAddingReviewStatus } from '../../store/slices/reviews/selectors';
+import { getAddingErrorStatus, getAddingReviewStatus, getAddingSeccessStatus } from '../../store/slices/reviews/selectors';
 type ReviewProps = {
   idOffer: OfferPreview['id'];
 }
@@ -13,6 +13,8 @@ export function ReviewFormComponent({idOffer}: ReviewProps): JSX.Element {
   const [comment, setComment] = useState<ReviewShortType['comment']>('');
   const [rating, setRating] = useState<ReviewShortType['rating'] | null>(null);
   const setIsFormDisabled = useAppSelector(getAddingReviewStatus);
+  const hasError = useAppSelector(getAddingErrorStatus);
+  const isSuccessAddReview = useAppSelector(getAddingSeccessStatus);
   const isValid =
     comment.length >= MIN_COMMENT_LENGTH &&
     comment.length <= MAX_COMMENT_LENGTH &&
@@ -36,7 +38,9 @@ export function ReviewFormComponent({idOffer}: ReviewProps): JSX.Element {
     if(idOffer) {
       dispatch(addNewReviewAction([idOffer, {comment, rating: rating as ReviewShortType['rating']}]));
     }
-    resetForm();
+    if(isSuccessAddReview) {
+      resetForm();
+    }
   };
 
   return(
@@ -87,9 +91,9 @@ export function ReviewFormComponent({idOffer}: ReviewProps): JSX.Element {
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least {' '}
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with
           <b className="reviews__text-amount">
-            {comment.length && comment.length < MIN_COMMENT_LENGTH ? MIN_COMMENT_LENGTH - comment.length : MIN_COMMENT_LENGTH} characters
+            {comment.length && comment.length < MIN_COMMENT_LENGTH ? ` left ${MIN_COMMENT_LENGTH - comment.length}` : ` at least ${ MIN_COMMENT_LENGTH}`} characters
           </b>.
         </p>
         <button
@@ -100,6 +104,7 @@ export function ReviewFormComponent({idOffer}: ReviewProps): JSX.Element {
           {setIsFormDisabled ? 'Submit...' : 'Submit'}
         </button>
       </div>
+      {hasError && <div style={{ color: 'red', marginTop: '20px' }}>Произошла ошибка отправки данных. Попробуйте ещё раз</div>}
     </form>
   );
 }

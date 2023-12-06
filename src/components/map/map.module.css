@@ -2,6 +2,9 @@
   height: 100%;
   min-height: 500px;
   width: 100%;
-  max-width: 1144px;
-  margin: 0 auto;
+}
+
+.offer__map {
+  height: 579px;
+  margin-bottom: 50px;
 }

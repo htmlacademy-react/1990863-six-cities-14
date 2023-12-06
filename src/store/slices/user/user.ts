@@ -20,6 +20,9 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<UserData | null>) => {
       state.user = action.payload;
     },
+    changeAuthorizationStatus: (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+    },
   },
   extraReducers(bulder) {
     bulder
@@ -44,4 +47,4 @@ export const userSlice = createSlice({
   }
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, changeAuthorizationStatus } = userSlice.actions;

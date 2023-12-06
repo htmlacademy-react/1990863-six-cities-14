@@ -17,18 +17,23 @@ import HistoryRouter from '../history-route/history-route';
 import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/slices/user/selectors';
 import { getErrorOffersStatus, getOffersLoadingStatus } from '../../store/slices/offers/selectors';
 import ErrorOffersScreen from '../../pages/error-screen/error-offers-screen';
+import { getToken } from '../../services/token';
+import { changeAuthorizationStatus } from '../../store/slices/user/user';
 
 function App(): JSX.Element {
+  const token = getToken();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+
+  if (token !== '') {
     dispatch(checkAuthAction());
-  }, [dispatch]);
+  } else {
+    dispatch(changeAuthorizationStatus());
+  }
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersLoading = useAppSelector(getOffersLoadingStatus);
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
-  const hasErrorOffers = useAppSelector(getErrorOffersStatus);
 
   useEffect(() => {
     dispatch(fetchOffersAction());
@@ -36,6 +41,8 @@ function App(): JSX.Element {
       dispatch(fetchFavoriteOffersAction());
     }
   }, [authorizationStatus, dispatch]);
+
+  const hasErrorOffers = useAppSelector(getErrorOffersStatus);
 
   if (!isAuthChecked || isOffersLoading) {
     return (

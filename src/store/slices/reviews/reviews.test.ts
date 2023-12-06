@@ -8,7 +8,9 @@ describe('Reviews Slice', () => {
     const emptyAction = { type: '' };
     const expectedState = {
       reviews: [],
-      isAddingReview: false
+      isAddingReview: false,
+      isAddingError: false,
+      isAddingSeccess: false,
     };
 
     const result = reviewsSlice.reducer(expectedState, emptyAction);
@@ -19,7 +21,9 @@ describe('Reviews Slice', () => {
     const emptyAction = { type: '' };
     const expectedState = {
       reviews: [],
-      isAddingReview: false
+      isAddingReview: false,
+      isAddingError: false,
+      isAddingSeccess: false,
     };
 
     const result = reviewsSlice.reducer(undefined, emptyAction);
@@ -30,7 +34,9 @@ describe('Reviews Slice', () => {
     const id = fakeOffers[0].id;
     const expectedState = {
       reviews: fakeReviews,
-      isAddingReview: false
+      isAddingReview: false,
+      isAddingError: false,
+      isAddingSeccess: false,
     };
 
     const result = reviewsSlice.reducer(
@@ -46,7 +52,9 @@ describe('Reviews Slice', () => {
     const id = fakeOffers[0].id;
     const expectedState = {
       reviews: [review],
-      isAddingReview: false
+      isAddingReview: false,
+      isAddingError: false,
+      isAddingSeccess: true,
     };
 
     const result = reviewsSlice.reducer(
@@ -59,7 +67,9 @@ describe('Reviews Slice', () => {
   it('should return status true  with addNewReviewAction.pending', () => {
     const expectedState = {
       reviews: [],
-      isAddingReview: true
+      isAddingReview: true,
+      isAddingError: false,
+      isAddingSeccess: false,
     };
     const result = reviewsSlice.reducer(
       undefined,
