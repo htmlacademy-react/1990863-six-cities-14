@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { checkAuthAction, fetchFavoriteOffersAction, fetchOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import browserHistory from '../../browser-history';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/slices/user/selectors';
 import { getErrorOffersStatus, getOffersLoadingStatus } from '../../store/slices/offers/selectors';
 import ErrorOffersScreen from '../../pages/error-screen/error-offers-screen';
